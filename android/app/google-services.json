@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "225013653356",
+    "project_id": "barcode-c8a32",
+    "storage_bucket": "barcode-c8a32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225013653356:android:77265d8549483aa2e35d49",
+        "android_client_info": {
+          "package_name": "com.example.barcodesystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225013653356-lvmku9uhuq3fantslsths1mtt00vqv7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1sfAp5hnhd-dFSbqYs9BA-iDr-lahOSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225013653356-lvmku9uhuq3fantslsths1mtt00vqv7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:barcodesystem/screens/home_admin.dart';
 import 'package:barcodesystem/screens/home_user.dart';
 import 'package:barcodesystem/screens/sign_in_page.dart';
 import 'package:barcodesystem/screens/welcome_page.dart';
@@ -244,6 +245,7 @@ class AuthController extends GetxController {
         // for (var element in ch.docs) {
         //   if (element['email'] == email.text) {
         //     approve = 1;
+        //     update();
         //     // Get.back();
         //     // Get.offAll(() => const HomeScreen());
         //   }
@@ -251,10 +253,12 @@ class AuthController extends GetxController {
         // for (var element in ch2.docs) {
         //   if (element['email'] == email.text) {
         //     approve = 2;
+        //     update();
         //     // Get.back();
         //     // Get.offAll(() => const HomeScreen());
         //   }
         // }
+        // log("message: $approve");
         // if (approve == 1) {
         //   email.clear();
         //   password.clear();
@@ -275,11 +279,8 @@ class AuthController extends GetxController {
         // }
         // if (ch.docs.isNotEmpty) {
         //   Get.back();
-        //   Get.offAll(() => const HomeScreen());
-        // } else {
-
-        // }
-
+        //   // Get.offAll(() => HomeScreen());
+        // } else {}
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           Get.back();

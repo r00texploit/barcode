@@ -1,4 +1,6 @@
+import 'package:barcodesystem/screens/details.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 
 import 'camera_view.dart';
@@ -56,6 +58,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
         text += 'Barcode: ${barcode.rawValue}\n\n';
       }
       _text = text;
+      Get.to(() => getProductDetails(text));
       // TODO: set _customPaint to draw boundingRect on top of image
       _customPaint = null;
     }

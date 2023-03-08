@@ -9,7 +9,9 @@ import 'package:image_picker/image_picker.dart';
 import '../main.dart';
 
 enum ScreenMode { liveFeed, gallery }
+
 List<CameraDescription> cameras = [];
+
 class CameraView extends StatefulWidget {
   CameraView(
       {Key? key,
@@ -49,7 +51,7 @@ class _CameraViewState extends State<CameraView> {
     super.initState();
 
     _imagePicker = ImagePicker();
-   
+
     if (cameras.any(
       (element) =>
           element.lensDirection == widget.initialDirection &&
@@ -88,20 +90,20 @@ class _CameraViewState extends State<CameraView> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          if (_allowPicker)
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: _switchScreenMode,
-                child: Icon(
-                  _mode == ScreenMode.liveFeed
-                      ? Icons.photo_library_outlined
-                      : (Platform.isIOS
-                          ? Icons.camera_alt_outlined
-                          : Icons.camera),
-                ),
-              ),
-            ),
+          // if (_allowPicker)
+          //   Padding(
+          //     padding: EdgeInsets.only(right: 20.0),
+          //     child: GestureDetector(
+          //       onTap: _switchScreenMode,
+          //       child: Icon(
+          //         _mode == ScreenMode.liveFeed
+          //             ? Icons.photo_library_outlined
+          //             : (Platform.isIOS
+          //                 ? Icons.camera_alt_outlined
+          //                 : Icons.camera),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
       body: _body(),
@@ -210,13 +212,13 @@ class _CameraViewState extends State<CameraView> {
               Icons.image,
               size: 200,
             ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ElevatedButton(
-          child: Text('From Gallery'),
-          onPressed: () => _getImage(ImageSource.gallery),
-        ),
-      ),
+      // Padding(
+      //   padding: EdgeInsets.symmetric(horizontal: 16),
+      //   child: ElevatedButton(
+      //     child: Text('From Gallery'),
+      //     onPressed: () => _getImage(ImageSource.gallery),
+      //   ),
+      // ),
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ElevatedButton(

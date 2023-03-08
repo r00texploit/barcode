@@ -13,15 +13,26 @@ class getProductDetails extends StatefulWidget {
 
 class _getProductDetailsState extends State<getProductDetails> {
   bool loading = false;
+  var snap;
   @override
   void initState() {
     super.initState();
     loading = true;
+    log("message: ${widget.scanBarcode}");
+    getSnap();
+  }
+
+  getSnap() async {
+    snap = await FirebaseFirestore.instance
+        .collection('products')
+        .where("barcode", isEqualTo: widget.scanBarcode)
+        // .limit(1)
+        .snapshots();
+    return snap;
   }
 
   @override
   Widget build(BuildContext context) {
-    log("message: ${widget.scanBarcode}");
     return Scaffold(
         appBar: AppBar(
           title: const Text('Products Detials'),
@@ -30,11 +41,7 @@ class _getProductDetailsState extends State<getProductDetails> {
             ? Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('products')
-                        .where("barcode", isEqualTo: widget.scanBarcode)
-                        // .limit(1)
-                        .snapshots(),
+                    stream: snap,
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
                         // var code = snapshot.data!.docs.first['barcode'];
@@ -43,6 +50,7 @@ class _getProductDetailsState extends State<getProductDetails> {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
+                            log("${snapshot.data!.docs[index]['product_name'].toString()}");
                             return Column(
                               children: [
                                 SizedBox(
@@ -86,8 +94,8 @@ class _getProductDetailsState extends State<getProductDetails> {
                         );
                       } else {
                         return Center(
-                child: CircularProgressIndicator(),
-              );
+                          child: CircularProgressIndicator(),
+                        );
                       }
                     }),
               )

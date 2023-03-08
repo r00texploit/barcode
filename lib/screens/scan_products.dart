@@ -1,10 +1,11 @@
 import 'dart:developer';
 
+import 'package:barcodesystem/screens/barcode_scanner_view.dart';
 import 'package:barcodesystem/screens/details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_barcode_scanner/enum.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
+// import 'package:simple_barcode_scanner/enum.dart';
+// import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 import '../controller/add_product_controller.dart';
 
@@ -36,20 +37,21 @@ class _BarCodeScannerState extends State<BarCodeScanner> {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () async {
-                    var res = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SimpleBarcodeScannerPage(
-                            scanType: ScanType.barcode,
-                          ),
-                        ));
-                    log(res);
-                    setState(() {
-                      //if (res is String) {
-                      _scanBarcode = res;
+                    Get.to(() => BarcodeScannerView());
+                    // var res = await Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const SimpleBarcodeScannerPage(
+                    //         scanType: ScanType.barcode,
+                    //       ),
+                    //     ));
+                    // log(res);
+                    // setState(() {
+                    //   //if (res is String) {
+                    //   _scanBarcode = res;
 
-                      //}
-                    });
+                    //   //}
+                    // });
                   },
                   child: const Text('Scan Product'),
                 ),

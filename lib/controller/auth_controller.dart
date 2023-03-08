@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:barcodesystem/screens/home_admin.dart';
 import 'package:barcodesystem/screens/home_user.dart';
 import 'package:barcodesystem/screens/sign_in_page.dart';
 import 'package:barcodesystem/screens/welcome_page.dart';
@@ -231,49 +230,49 @@ class AuthController extends GetxController {
         showdilog();
         final credential = await auth.signInWithEmailAndPassword(
             email: email.text, password: password.text);
-        var ch = await FirebaseFirestore.instance
-            .collection('admin')
-            .where('type', isEqualTo: "admin")
-            // .where('email', isEqualTo: email.text)
-            .get();
-        var ch2 = await FirebaseFirestore.instance
-            .collection('user')
-            .where('type', isEqualTo: "user")
-            // .where('email', isEqualTo: email.text)
-            .get();
-        int approve = 0;
-        for (var element in ch.docs) {
-          if (element['email'] == email.text) {
-            approve = 1;
-            // Get.back();
-            // Get.offAll(() => const HomeScreen());
-          }
-        }
-        for (var element in ch2.docs) {
-          if (element['email'] == email.text) {
-            approve = 2;
-            // Get.back();
-            // Get.offAll(() => const HomeScreen());
-          }
-        }
-        if (approve == 1) {
-          email.clear();
-          password.clear();
-          Get.back();
-          Get.offAll(() => HomeAdmin());
-        }
-        if (approve == 2) {
-          email.clear();
-          password.clear();
-          Get.back();
-          log("uid:${credential.user!.uid}");
-          Get.offAll(() => HomeScreen());
-        }
-        if (approve == 0) {
-          Get.back();
-          showbar("About Login", "Login message", 'You dont have a permission',
-              false);
-        }
+        // var ch = await FirebaseFirestore.instance
+        //     .collection('admin')
+        //     .where('type', isEqualTo: "admin")
+        //     // .where('email', isEqualTo: email.text)
+        //     .get();
+        // var ch2 = await FirebaseFirestore.instance
+        //     .collection('user')
+        //     .where('type', isEqualTo: "user")
+        //     // .where('email', isEqualTo: email.text)
+        //     .get();
+        // int approve = 0;
+        // for (var element in ch.docs) {
+        //   if (element['email'] == email.text) {
+        //     approve = 1;
+        //     // Get.back();
+        //     // Get.offAll(() => const HomeScreen());
+        //   }
+        // }
+        // for (var element in ch2.docs) {
+        //   if (element['email'] == email.text) {
+        //     approve = 2;
+        //     // Get.back();
+        //     // Get.offAll(() => const HomeScreen());
+        //   }
+        // }
+        // if (approve == 1) {
+        //   email.clear();
+        //   password.clear();
+        //   Get.back();
+        //   Get.offAll(() => HomeAdmin());
+        // }
+        // if (approve == 2) {
+        email.clear();
+        password.clear();
+        Get.back();
+        log("uid:${credential.user!.uid}");
+        Get.offAll(() => HomeScreen());
+        // }
+        // if (approve == 0) {
+        //   Get.back();
+        //   showbar("About Login", "Login message", 'You dont have a permission',
+        //       false);
+        // }
         // if (ch.docs.isNotEmpty) {
         //   Get.back();
         //   Get.offAll(() => const HomeScreen());

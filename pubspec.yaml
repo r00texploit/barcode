@@ -29,7 +29,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  badges: ^2.0.2
+  badges: ^3.0.2
   # barcode_scan2: ^4.2.3
   bottom_picker: 
   cached_network_image: ^3.2.0
@@ -45,11 +45,14 @@ dependencies:
     sdk: flutter
   flutter_spinkit: 
   flutter_svg: ^1.0.3
+  camera: ^0.10.0+4
+  image_picker:
   # flutter_zxing: ^0.10.0
   get: ^4.1.4
   # image_stack: ^2.1.1
   intl: 
-  simple_barcode_scanner: ^0.0.7
+  # simple_barcode_scanner: ^0.0.7
+  google_ml_kit: ^0.13.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

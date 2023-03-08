@@ -85,7 +85,9 @@ class _getProductDetailsState extends State<getProductDetails> {
                           },
                         );
                       } else {
-                        return const Text("data");
+                        return Center(
+                child: CircularProgressIndicator(),
+              );
                       }
                     }),
               )

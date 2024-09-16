@@ -62,7 +62,7 @@ class _BarCodeScannerState extends State<BarCodeScanner> {
 
   dynamic _fetch(String? code) async {
     AddProductsController controller = Get.put(AddProductsController());
-    var prod = controller.getproduct();
+    var prod = controller.getProductByBarcode(code!);
     return prod;
   }
 }

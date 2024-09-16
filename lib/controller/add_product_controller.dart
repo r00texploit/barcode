@@ -33,10 +33,11 @@ class AddProductsController extends GetxController {
   // Stream<List<Product>> getAllTravels() => collectionReference
   //     .snapshots()
   //     .map((query) => query.docs.map((item) => Product.fromMap(item)).toList());
-  Stream<QuerySnapshot<Map<String, dynamic>>> getproduct() => FirebaseFirestore.instance
-      .collection('products')
-      .where('barcode', isEqualTo: products.barcode)
-      .snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> getproduct() =>
+      FirebaseFirestore.instance
+          .collection('products')
+          .where('barcode', isEqualTo: products.barcode)
+          .snapshots();
 
   @override
   void onInit() {
@@ -154,6 +155,26 @@ class AddProductsController extends GetxController {
         Get.back();
         showbar("Error", "Error", e.toString(), false);
       }
+    }
+  }
+
+  Future<DocumentSnapshot?> getProductByBarcode(String barcode) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .where('barcode', isEqualTo: barcode)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first;
+      } else {
+        print("No product found with barcode: $barcode");
+        return null;
+      }
+    } catch (e) {
+      print("Error retrieving product: $e");
+      return null;
     }
   }
 }

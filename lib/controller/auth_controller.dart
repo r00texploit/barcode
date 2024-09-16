@@ -276,7 +276,7 @@ class AuthController extends GetxController {
             .where('type', isEqualTo: "admin")
             .where('email', isEqualTo: email.text)
             .get();
-        if (ch2.docs.isNotEmpty) {
+        if (ch2.docs.first['email'] == email.text) {
           Get.offAll(() => HomeAdmin());
         } else {
           Get.offAll(() => HomeScreen());

@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:barcodesystem/controller/add_product_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class getProductDetails extends StatefulWidget {
   String scanBarcode;
@@ -12,6 +14,8 @@ class getProductDetails extends StatefulWidget {
 }
 
 class _getProductDetailsState extends State<getProductDetails> {
+  AddProductsController addProductsController =
+      Get.put(AddProductsController());
   bool loading = false;
   var snap;
   @override
@@ -19,7 +23,7 @@ class _getProductDetailsState extends State<getProductDetails> {
     super.initState();
     loading = true;
     log("message: ${widget.scanBarcode}");
-    snap = getSnap();
+    snap = addProductsController.getProductByBarcode(widget.scanBarcode);
   }
 
   Future<QuerySnapshot> getSnap() async {
@@ -28,7 +32,6 @@ class _getProductDetailsState extends State<getProductDetails> {
         .collection('products')
         .where('barcode', isEqualTo: widget.scanBarcode)
         .get();
-    //  snap;
   }
 
   @override
@@ -50,9 +53,11 @@ class _getProductDetailsState extends State<getProductDetails> {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
-                            log("${snapshot.data!.docs[index]['product_name'].toString()}");
-                            log("${snapshot.data!.docs[index]['price'].toString()}");
-                            log("${snapshot.data!.docs[index]['barcode'].toString()}");
+                            log(snapshot.data!.docs[index]['product_name']
+                                .toString());
+                            log(snapshot.data!.docs[index]['price'].toString());
+                            log(snapshot.data!.docs[index]['barcode']
+                                .toString());
                             return Column(
                               children: [
                                 SizedBox(

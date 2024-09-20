@@ -48,6 +48,8 @@ android {
         targetSdk = 34
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+        proguardFiles 'proguard-rules.pro'
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -64,7 +66,8 @@ android {
             minifyEnabled true //false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
+             multiDexEnabled true
+         }
     }
 
 

@@ -1,3 +1,6 @@
+import 'package:barcode/screens/add_admin.dart';
+import 'package:barcode/screens/show_admin.dart';
+import 'package:barcode/screens/show_products.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,10 +49,29 @@ class _ManagmentState extends State<Managment> {
                   nav: ShowUser(),
                 ),
                 Card_d(
-                  icon: Icon(Icons.person, size: 30, color: Colors.white),
+                  icon: Icon(Icons.shopping_cart_checkout_rounded, size: 30, color: Colors.white),
                   title: 'Add Product',
                   nav: AddProduct(),
                 ),
+                Card_d(
+                  icon: Icon(Icons.shopping_cart_checkout_rounded,
+                      size: 30, color: Colors.white),
+                  title: 'Show Products',
+                  nav: Showproducts(),
+                ),
+                Card_d(
+                  icon: Icon(Icons.manage_accounts,
+                      size: 30, color: Colors.white),
+                  title: 'Add Admin',
+                  nav: AddAdmin(),
+                ),
+                Card_d(
+                  icon: Icon(Icons.manage_accounts,
+                      size: 30, color: Colors.white),
+                  title: 'Show Admin',
+                  nav: ShowAdmin(),
+                ),
+                
               ]),
         ),
       ),

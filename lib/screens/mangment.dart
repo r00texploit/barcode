@@ -49,27 +49,9 @@ class _ManagmentState extends State<Managment> {
                   nav: ShowUser(),
                 ),
                 Card_d(
-                  icon: Icon(Icons.person, size: 30, color: Colors.white),
+                  icon: Icon(Icons.shopping_cart_checkout_rounded, size: 30, color: Colors.white),
                   title: 'Add Product',
                   nav: AddProduct(),
-                ),
-                Card_d(
-                  icon: Icon(Icons.manage_accounts,
-                      size: 30, color: Colors.white),
-                  title: 'Add Admin',
-                  nav: AddAdmin(),
-                ),
-                Card_d(
-                  icon: Icon(Icons.manage_accounts,
-                      size: 30, color: Colors.white),
-                  title: 'Show Admin',
-                  nav: ShowAdmin(),
-                ),
-                Card_d(
-                  icon: Icon(Icons.manage_accounts,
-                      size: 30, color: Colors.white),
-                  title: 'Show Products',
-                  nav: Showproducts(),
                 ),
               ]),
         ),

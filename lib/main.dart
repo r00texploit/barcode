@@ -1,4 +1,10 @@
 import 'package:barcode/controller/auth_controller.dart';
+import 'package:barcode/screens/add_product.dart';
+import 'package:barcode/screens/cart_screen.dart';
+import 'package:barcode/screens/details.dart';
+import 'package:barcode/screens/home_admin.dart';
+import 'package:barcode/screens/scan_products.dart';
+import 'package:barcode/screens/sign_in_page.dart';
 import 'package:barcode/screens/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -26,6 +32,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => const WelcomePage()),
+        GetPage(name: '/cart', page: () => CartScreen()),
+        GetPage(name: '/scan', page: () => BarCodeScanner()),
+        GetPage(name: '/add_product', page: () => const AddProduct()),
+        GetPage(name: '/admin', page: () => HomeAdmin()),
+        GetPage(name: '/login', page: () => LoginPage()),
+      ],
       home: const WelcomePage(),
     );
   }

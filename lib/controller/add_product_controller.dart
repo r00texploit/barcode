@@ -1,4 +1,5 @@
 // import 'dart:math';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:barcode/model/product_model.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import '../widgets/snackbar.dart';
 import 'package:path/path.dart';
@@ -183,4 +185,32 @@ class AddProductsController extends GetxController {
       return null;
     }
   }
+
+  updateProductQuantity(String barcode, int i) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('products')
+          .where('barcode', isEqualTo: barcode)
+          .limit(1)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          Map<String, dynamic> productData =
+              value.docs.first.data() as Map<String, dynamic>;
+          int currentQuantity = productData['quantity'] ?? 0;
+          int newQuantity = currentQuantity + i;
+          FirebaseFirestore.instance
+              .collection('products')
+              .doc(value.docs.first.id)
+              .update({'quantity': newQuantity});
+        } else {
+          log("No product found with barcode: $barcode");
+        }
+      });
+    } catch (e) {
+      log("Error updating product quantity: $e");
+    }
+  }
+
+ 
 }

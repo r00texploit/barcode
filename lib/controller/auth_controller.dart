@@ -197,6 +197,39 @@ class AuthController extends GetxController {
     }
   }
 
+  void addAdmin() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      update();
+      return;
+    } else {
+      try {
+        showdilog();
+        FirebaseAuth auth = FirebaseAuth.instance;
+        final credential = await auth.createUserWithEmailAndPassword(
+            email: email.text, password: password.text);
+        await credential.user!.reload();
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(credential.user!.uid)
+            .set({
+          'type': "admin",
+          'number': number.text,
+          'email': email.text,
+          'uid': credential.user!.uid,
+        });
+        // clear();
+        Get.back();
+        showbar("Admin Added", "Admin Added", "Admin Added ", true);
+      } catch (e)
+      // clear();
+      {
+        Get.back();
+        showbar("Error", "Error", e.toString(), false);
+      }
+    }
+  }
+
   void addUser() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) {

@@ -1,3 +1,4 @@
+import 'package:barcode/controller/add_product_controller.dart';
 import 'package:barcode/screens/details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,12 +46,10 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
       _text = '';
     });
     final barcodes = await _barcodeScanner.processImage(inputImage);
-    if (inputImage.inputImageData?.size != null &&
-        inputImage.inputImageData?.imageRotation != null) {
+    if (inputImage.metadata?.size != null &&
+        inputImage.metadata?.rotation != null) {
       final painter = BarcodeDetectorPainter(
-          barcodes,
-          inputImage.inputImageData!.size,
-          inputImage.inputImageData!.imageRotation);
+          barcodes, inputImage.metadata!.size, inputImage.metadata!.rotation);
       _customPaint = CustomPaint(painter: painter);
     } else {
       String text = 'Barcodes found: ${barcodes.length}\n\n';
@@ -58,7 +57,24 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
         text += 'Barcode: ${barcode.rawValue}\n\n';
       }
       _text = text;
-      Get.to(() => getProductDetails(text));
+      var productData;
+      AddProductsController addProductsController =
+          Get.put(AddProductsController());
+      await addProductsController.getProductByBarcode(_text!).then(
+        (value) {
+          setState(() {
+            productData = value;
+            addProductsController.update();
+            // loading = false;
+          });
+          if (productData == null || productData!.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Product not found')),
+            );
+          }
+        },
+      );
+      Get.to(() => getProductDetails(productData));
       // TODO: set _customPaint to draw boundingRect on top of image
       _customPaint = null;
     }

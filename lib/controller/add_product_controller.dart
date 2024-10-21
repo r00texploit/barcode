@@ -1,4 +1,5 @@
 // import 'dart:math';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:barcode/model/product_model.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import '../widgets/snackbar.dart';
 import 'package:path/path.dart';
@@ -30,6 +32,7 @@ class AddProductsController extends GetxController {
   late CollectionReference collectionReference;
   late CollectionReference productsref;
   late Product products;
+  Map<String, dynamic>? pro;
   auth.User? user;
   // Stream<List<Product>> getAllTravels() => collectionReference
   //     .snapshots()
@@ -53,6 +56,7 @@ class AddProductsController extends GetxController {
     number = TextEditingController();
     price = TextEditingController();
     no = TextEditingController();
+    pro = {};
 
     collectionReference = firebaseFirestore.collection("user");
     productsref = firebaseFirestore.collection("products");
@@ -158,29 +162,55 @@ class AddProductsController extends GetxController {
       }
     }
   }
-  Map<String, dynamic>? pro;
-   getProductByBarcode(String barcode) async {
+
+  Future<Map<String, dynamic>?> getProductByBarcode(String barcode) async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('products')
           .where('barcode', isEqualTo: barcode)
-          // .limit(1)
+          .limit(1)
           .get();
-      log("barcode: ${querySnapshot.docs.first["barcode"]}");
 
-      // if (querySnapshot.docs.isNotEmpty) {
-        pro =
-            querySnapshot.docs.first.data() as Map<String, dynamic>;
-        log("barcode: ${pro!["barcode"]}");
+      if (querySnapshot.docs.isNotEmpty) {
+        pro = querySnapshot.docs.first.data() as Map<String, dynamic>;
+        log("Product found with barcode: ${pro!["barcode"]}");
         update();
-        // return pro;
-      // } else {
-      //   print("No product found with barcode: $barcode");
-      //   return null;
-      // }
+        return pro;
+      } else {
+        log("No product found with barcode: $barcode");
+        return null;
+      }
     } catch (e) {
-      print("Error retrieving product: $e");
+      log("Error retrieving product: $e");
       return null;
     }
   }
+
+  updateProductQuantity(String barcode, int i) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('products')
+          .where('barcode', isEqualTo: barcode)
+          .limit(1)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          Map<String, dynamic> productData =
+              value.docs.first.data() as Map<String, dynamic>;
+          int currentQuantity = productData['quantity'] ?? 0;
+          int newQuantity = currentQuantity + i;
+          FirebaseFirestore.instance
+              .collection('products')
+              .doc(value.docs.first.id)
+              .update({'quantity': newQuantity});
+        } else {
+          log("No product found with barcode: $barcode");
+        }
+      });
+    } catch (e) {
+      log("Error updating product quantity: $e");
+    }
+  }
+
+ 
 }

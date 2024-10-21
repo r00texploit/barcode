@@ -1,13 +1,14 @@
 import 'dart:developer';
 
 import 'package:barcode/controller/add_product_controller.dart';
+import 'package:barcode/controller/cart_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class getProductDetails extends StatefulWidget {
-  String scanBarcode;
-  getProductDetails(this.scanBarcode, {super.key});
+  Map<String, dynamic> product;
+  getProductDetails(this.product, {super.key});
 
   @override
   State<getProductDetails> createState() => _getProductDetailsState();
@@ -23,38 +24,35 @@ class _getProductDetailsState extends State<getProductDetails> {
   void initState() {
     super.initState();
     loading = true;
-    log("message: ${widget.scanBarcode}");
-    getSnap();
+    log("message: getProductDetails => ${widget.product}");
+    // getSnap();
   }
 
-  getSnap() async {
-    await addProductsController
-        .getProductByBarcode(widget.scanBarcode);
-    //     .then((onValue) {
-    //   if (onValue != null) {
-        setState(() {
-          productData = addProductsController.pro;
-          loading = false;
-        });
-    //   } else {
-    //     // Handle the case when no product is found
-    //     setState(() {
-    //       loading = false;
-    //     });
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text('Product not found')),
-    //     );
-    //   }
-    // }).catchError((error) {
-    //   // Handle any errors that occur during the fetch
-    //   setState(() {
-    //     loading = false;
-    //   });
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text('Error fetching product: $error')),
-    //   );
-    // });
-  }
+  // getSnap() async {
+  //   try {
+  //     await addProductsController.getProductByBarcode(widget.product).then(
+  //       (value) {
+  //         setState(() {
+  //           addProductsController.update();
+  //           productData = addProductsController.pro;
+  //           loading = false;
+  //         });
+  //         if (productData == null || productData!.isEmpty) {
+  //           ScaffoldMessenger.of(context).showSnackBar(
+  //             SnackBar(content: Text('Product not found')),
+  //           );
+  //         }
+  //       },
+  //     );
+  //   } catch (error) {
+  //     setState(() {
+  //       loading = false;
+  //     });
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Error fetching product: $error')),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +66,9 @@ class _getProductDetailsState extends State<getProductDetails> {
                 child: ListView.builder(
                   itemCount: 1,
                   itemBuilder: (BuildContext context, int index) {
-                    // log(addProductsController.pro!['product_name'].toString());
-                    // log(addProductsController.pro!['price'].toString());
-                    // log(addProductsController.pro!['barcode'].toString());
+                    log(widget.product['products_name'].toString());
+                    log(widget.product['price'].toString());
+                    log(widget.product['barcode'].toString());
                     return Column(
                       children: [
                         SizedBox(
@@ -85,25 +83,46 @@ class _getProductDetailsState extends State<getProductDetails> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Text(
-                                      'Products name: ${addProductsController.pro!['product_name']}',
+                                      'Products name: ${widget.product['products_name']}',
                                       style:
                                           const TextStyle(color: Colors.white)),
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  Text('price: ${addProductsController.pro!['price']}',
+                                  Text('price: ${widget.product['price']}',
                                       style:
                                           const TextStyle(color: Colors.white)),
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  Text('barcode: ${addProductsController.pro!['barcode']}',
+                                  Text('barcode: ${widget.product['barcode']}',
                                       style:
                                           const TextStyle(color: Colors.white)),
                                 ],
                               ),
                             ),
                           ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Implement the logic to decrease the product amount by 1
+                            // You'll need to access the product data and update the quantity
+                            // For example:
+                            var cartController = Get.put(CartController());
+                            cartController.addToCart(
+                                widget.product['barcode'], 1);
+                          },
+                          child: const Text('Add to Cart'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Implement the logic to decrease the product amount by 1
+                            // You'll need to access the product data and update the quantity
+                            // For example:
+                            var cartController = Get.put(CartController());
+                            cartController.goToCart();
+                          },
+                          child: const Text('Go to Cart'),
                         ),
                       ],
                     );

@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:barcode/controller/add_product_controller.dart';
 import 'package:barcode/controller/cart_controller.dart';
+import 'package:barcode/model/cart_model.dart';
+import 'package:barcode/model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -109,8 +111,9 @@ class _getProductDetailsState extends State<getProductDetails> {
                             // You'll need to access the product data and update the quantity
                             // For example:
                             var cartController = Get.put(CartController());
-                            cartController.addToCart(
-                                widget.product['barcode'], 1);
+                            // var product = Product.fromJson(widget.product);
+                            var cart = CartItem.fromMap(widget.product);
+                            cartController.addToCart(cart);
                           },
                           child: const Text('Add to Cart'),
                         ),
@@ -119,8 +122,8 @@ class _getProductDetailsState extends State<getProductDetails> {
                             // Implement the logic to decrease the product amount by 1
                             // You'll need to access the product data and update the quantity
                             // For example:
-                            var cartController = Get.put(CartController());
-                            cartController.goToCart();
+                            // var cartController = Get.put(CartController());
+                            Get.toNamed('/cart');
                           },
                           child: const Text('Go to Cart'),
                         ),

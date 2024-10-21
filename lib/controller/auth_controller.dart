@@ -304,9 +304,10 @@ class AuthController extends GetxController {
         // password.clear();
         // Get.back();
         log("uid:${credential.user!.uid}");
-        var userDoc = await FirebaseFirestore.instance
+        final userDoc = await FirebaseFirestore.instance
             .collection('user')
             .where('email', isEqualTo: email.text)
+            .limit(1) // Limit to one document for efficiency
             .get();
 
         // Check if a user document was found
@@ -316,10 +317,13 @@ class AuthController extends GetxController {
 
           // Navigate based on user type
           if (userType == "admin") {
-        Get.offAll(() => HomeAdmin());
+            Get.offAll(() => HomeAdmin());
+          } else {
+            Get.offAll(() => HomeScreen());
+          }
         } else {
-        Get.offAll(() => HomeScreen());
-        }
+          Get.back();
+          showbar("About Login", "Login message", 'User not found', false);
         }
         // Get.offAll(() => HomeScreen());
         // }

@@ -52,28 +52,25 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
           barcodes, inputImage.metadata!.size, inputImage.metadata!.rotation);
       _customPaint = CustomPaint(painter: painter);
     } else {
-      String text = 'Barcodes found: ${barcodes.length}\n\n';
-      for (final barcode in barcodes) {
-        text += 'Barcode: ${barcode.rawValue}\n\n';
-      }
-      _text = text;
+      _text = barcodes.isNotEmpty ? barcodes.first.rawValue : '';
       var productData;
       AddProductsController addProductsController =
           Get.put(AddProductsController());
-      await addProductsController.getProductByBarcode(_text!).then(
-        (value) {
-          setState(() {
-            productData = value;
-            addProductsController.update();
-            // loading = false;
-          });
-          if (productData == null || productData!.isEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Product not found')),
-            );
-          }
-        },
-      );
+      productData = await addProductsController.getProductByBarcode(_text!);
+      setState(() {});
+      //  (value) {
+      // setState(() {
+      //   productData = value;
+      //   addProductsController.update();
+      //   // loading = false;
+      // });
+      if (productData == null || productData!.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Product not found')),
+        );
+      }
+      // },
+      // );
       Get.to(() => getProductDetails(productData));
       // TODO: set _customPaint to draw boundingRect on top of image
       _customPaint = null;

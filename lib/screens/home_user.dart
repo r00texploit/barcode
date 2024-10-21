@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   AuthController auth = Get.find();
-  CartController cartController = Get.find();
+  CartController cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     final data = MediaQuery.of(context);
@@ -28,7 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: Icon(Icons.logout)),
         IconButton(
-            onPressed: cartController.goToCart, icon: Icon(Icons.shopping_cart))
+            onPressed: () {
+              Get.toNamed("/cart");
+            },
+            icon: Icon(Icons.shopping_cart))
       ]),
       body: BarCodeScanner(),
     );

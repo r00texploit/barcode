@@ -3,6 +3,7 @@ import 'package:barcode/screens/add_product.dart';
 import 'package:barcode/screens/cart_screen.dart';
 import 'package:barcode/screens/details.dart';
 import 'package:barcode/screens/home_admin.dart';
+import 'package:barcode/screens/home_user.dart';
 import 'package:barcode/screens/scan_products.dart';
 import 'package:barcode/screens/sign_in_page.dart';
 import 'package:barcode/screens/welcome_page.dart';
@@ -34,8 +35,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => const WelcomePage()),
-        GetPage(name: '/cart', page: () => CartScreen()),
+        GetPage(name: '/', page: () => HomeScreen()),
+        GetPage(name: '/cart', page: () => CartPage()),
         GetPage(name: '/scan', page: () => BarCodeScanner()),
         GetPage(name: '/add_product', page: () => const AddProduct()),
         GetPage(name: '/admin', page: () => HomeAdmin()),

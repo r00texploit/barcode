@@ -23,7 +23,7 @@ class Product {
   Product.fromJson(Map<String, dynamic> data) {
     product_name = data["product_name"];
     barcode = data["barcode"];
-    price = data["price"];
+    price = int.parse(data["price"]);
     quantity = data["quantity"];
   }
 

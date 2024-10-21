@@ -5,55 +5,62 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CartController extends GetxController {
   var cartItems = <CartItem>[].obs;
+  var quantity = 0;
 
   @override
   void onInit() {
     super.onInit();
     loadCartItems();
   }
-  double get totalPrice => cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+
+  double get totalPrice =>
+      cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
 
   // Load cart items from SharedPreferences
   Future<void> loadCartItems() async {
     final prefs = await SharedPreferences.getInstance();
-    final cartString = prefs.getString('cartItems');
+    final cartString = prefs.getStringList('cartItems');
     if (cartString != null) {
-      List<dynamic> cartJson = jsonDecode(cartString);
-      cartItems.value = cartJson.map((item) => CartItem.fromMap(item)).toList();
+      // List<dynamic> cartJson = jsonDecode(cartString.toString());
+      cartItems.value = cartString.map((item) {
+        final Map<String, dynamic> map = jsonDecode(item);
+        return CartItem.fromMap(map);
+      }).toList();
     }
   }
 
   // Add item to cart
-  void addToCart(CartItem item) {
+  void addToCart(CartItem item, int add) {
     int existingIndex = cartItems.indexWhere((i) => i.id == item.id);
     if (existingIndex != -1) {
-      var quantity = cartItems[existingIndex].quantity;
-      quantity = quantity + item.quantity;
+      // var quantity = cartItems[existingIndex].quantity;
+      quantity = add + cartItems[existingIndex].quantity;
     } else {
       cartItems.add(item);
     }
-    saveCartItems();
+    saveCartItems(cartItems);
   }
 
   // Remove item from cart
   void removeFromCart(String? itemId) {
     cartItems.removeWhere((item) => item.id == itemId);
-    saveCartItems();
+    saveCartItems(cartItems);
   }
 
   // Save cart items to SharedPreferences
-  Future<void> saveCartItems() async {
+  // Future<void> saveCartItems() async {
+  Future<void> saveCartItems(List<CartItem> items) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-      'cartItems',
-      jsonEncode(cartItems.map((i) => i.toMap()).toList()),
-    );
+    List<String> cartItemsJson =
+        items.map((item) => jsonEncode(item.toMap())).toList();
+    await prefs.setStringList('cartItems', cartItemsJson);
+// }
   }
 
   // Clear the entire cart
   void clearCart() {
     cartItems.clear();
-    saveCartItems();
+    saveCartItems(cartItems);
   }
 
   void checkout() {

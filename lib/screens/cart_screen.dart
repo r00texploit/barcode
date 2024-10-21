@@ -16,7 +16,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   final CartController cartManager = Get.put(CartController());
-  List<CartItem> cartItems = [];
+  var cartItems = <CartItem>[].obs;
 
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _CartPageState extends State<CartPage> {
             ),
           ],
         ),
-        body: cartManager.cartItems.isEmpty
+        body: cartItems.isEmpty
             ? const Center(
                 child: Text('No items in cart.'),
               )
@@ -83,31 +83,43 @@ class _CartPageState extends State<CartPage> {
                 children: [
                   Expanded(
                     child: ListView.builder(
-                      itemCount: cartManager.cartItems.length,
+                      itemCount: cartItems.length,
                       itemBuilder: (context, index) {
-                        log("`cart`" + cartManager.cartItems[index].toString());
-                        // final item = cartManager.cartItems[index];
+                        // log("`cart`" +
+                        //     cartManager.cartItems[index].quantity.toString());
+                        final item = cartItems[index];
+                        var itq = item.quantity;
                         // final product = Product.fromJson(item);
                         return ListTile(
-                          leading: Text(cartManager.cartItems[index].name),
+                          leading: Text(item.name),
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                  '${cartManager.cartItems[index].quantity} x ${cartManager.cartItems[index].price!}'),
+                              Text('${item.quantity} x ${item.price}'),
                               Row(
                                 children: [
                                   IconButton(
                                     icon: const Icon(Icons.remove),
                                     onPressed: () {
-                                      cartManager
-                                          .removeFromCart(cartItems[index].id);
+                                      setState(() {
+                                        item.quantity--;
+                                      });
+                                      if (item.quantity == 0) {
+                                        cartManager.removeFromCart(item.id);
+                                      }
                                     },
                                   ),
                                   IconButton(
                                     icon: const Icon(Icons.add),
                                     onPressed: () {
-                                      cartManager.addToCart(cartItems[index]);
+                                      // cartManager.addToCart(cartItems[index]);
+
+                                      if (item.quantity > itq) {
+                                      } else {
+                                        setState(() {
+                                          item.quantity++;
+                                        });
+                                      }
                                     },
                                   ),
                                 ],
@@ -117,7 +129,7 @@ class _CartPageState extends State<CartPage> {
                           trailing: IconButton(
                             icon: const Icon(Icons.delete),
                             onPressed: () {
-                              cartManager.removeFromCart(cartItems[index].id);
+                              cartManager.removeFromCart(item.id);
                             },
                           ),
                         );

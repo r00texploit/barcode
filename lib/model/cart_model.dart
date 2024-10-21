@@ -1,7 +1,7 @@
 class CartItem {
   final String id;
   final String name;
-  final int quantity;
+  int quantity;
   final double price;
 
   CartItem({
@@ -22,10 +22,12 @@ class CartItem {
 
   factory CartItem.fromMap(Map<String, dynamic> map) {
     return CartItem(
-      id: map['barcode'],
-      name: map['name'],
-      quantity: map['quantity'],
-      price: map['price'],
+      id: map['barcode'] ?? '',
+      name: map['products_name'] ?? '',
+      quantity: map['quantity'] ?? 0,
+      price: (map['price'] is String)
+          ? double.tryParse(map['price']) ?? 0.0
+          : (map['price'] as double),
     );
   }
 }

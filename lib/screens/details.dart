@@ -113,7 +113,7 @@ class _getProductDetailsState extends State<getProductDetails> {
                             var cartController = Get.put(CartController());
                             // var product = Product.fromJson(widget.product);
                             var cart = CartItem.fromMap(widget.product);
-                            cartController.addToCart(cart);
+                            cartController.addToCart(cart,1);
                           },
                           child: const Text('Add to Cart'),
                         ),

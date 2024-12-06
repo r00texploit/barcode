@@ -1,0 +1,10 @@
+<resources>
+    <!-- Replace with your project details -->
+    <string name="firebase_database_url" translatable="false">https://barcode-46ab2.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">249576901616</string>
+    <string name="google_api_key" translatable="false">AIzaSyBC2N9mSiG6NMI8_tURyN9Do-sWqXpB9IY</string>
+    <string name="google_app_id" translatable="false">1:249576901616:android:440a37ffb5067fe65feb35</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBC2N9mSiG6NMI8_tURyN9Do-sWqXpB9IY</string>
+    <string name="project_id" translatable="false">barcode-46ab2</string>
+    <string name="google_storage_bucket" translatable="false">barcode-46ab2.appspot.com</string>
+</resources>

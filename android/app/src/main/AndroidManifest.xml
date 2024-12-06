@@ -2,7 +2,7 @@
     <application
         android:label="barcode"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:extractNativeLibs="true"
         android:enableOnBackInvokedCallback="true"
         >

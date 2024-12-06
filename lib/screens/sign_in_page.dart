@@ -174,7 +174,7 @@ class LoginPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
             foreground: Paint()
               ..shader = const LinearGradient(
-                colors: <Color>[Colors.white, Colors.blueAccent],
+                colors: <Color>[Colors.white, Colors.purple],
               ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
           ),
         ),

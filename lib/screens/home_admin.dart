@@ -71,12 +71,12 @@ class _HomeAdminState extends State<HomeAdmin> {
             color: Colors.green,
             onTap: () => Get.to(() => const AddUser()),
           ),
-          _buildDashboardTile(
-            title: "Scan Products",
-            icon: Icons.qr_code_scanner,
-            color: Colors.orange,
-            onTap: () => Get.to(() => BarcodeScannerView()),
-          ),
+         // _buildDashboardTile(
+           // title: "Scan Products",
+           // icon: Icons.qr_code_scanner,
+           // color: Colors.orange,
+           // onTap: () => Get.to(() => BarcodeScannerView()),
+          //),
           _buildDashboardTile(
             title: "Add Product",
             icon: Icons.add_shopping_cart,

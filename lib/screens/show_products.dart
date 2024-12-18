@@ -57,6 +57,7 @@ class _ShowproductsState extends State<Showproducts> {
                   name: product['products_name'],
                   price: product['price'],
                   barcode: product['barcode'],
+                  quantity: product['quantity'].toString(),
                 );
               },
             );
@@ -72,6 +73,7 @@ class ProductCard extends StatelessWidget {
   final String name;
   final String price;
   final String barcode;
+  final String quantity;
 
   const ProductCard({
     Key? key,
@@ -79,6 +81,7 @@ class ProductCard extends StatelessWidget {
     required this.name,
     required this.price,
     required this.barcode,
+    required this.quantity,
   }) : super(key: key);
 
   @override
@@ -101,6 +104,9 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 8),
             // Price section with icon
             _buildProductInfoRow(Icons.attach_money, 'Price', price, context),
+            const SizedBox(height: 8),
+            // quantity section with icon
+            _buildProductInfoRow(Icons.attach_money, 'Quantity', quantity, context),
             const SizedBox(height: 8),
             // Barcode section with icon
             _buildProductInfoRow(Icons.qr_code, 'Barcode', barcode, context),

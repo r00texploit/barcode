@@ -20,6 +20,7 @@ class AddProductsController extends GetxController {
   late TextEditingController bar_code,
       cat,
       price,
+      quantity,
       no,
       email,
       password,
@@ -51,6 +52,7 @@ class AddProductsController extends GetxController {
     product_name = TextEditingController();
     number = TextEditingController();
     price = TextEditingController();
+    quantity = TextEditingController();
     no = TextEditingController();
     pro = {};
 
@@ -184,6 +186,7 @@ class AddProductsController extends GetxController {
           "price": price.text,
           "products_name": product_name.text,
           "barcode": bar_code.text
+          "quantity": quantity.text
         });
         Get.back();
         cat.clear();

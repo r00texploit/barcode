@@ -118,6 +118,20 @@ class AddProduct extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
+                  // Price Field
+                  CustomTextField(
+                    controller: productController.quantity,
+                    validator: (value) =>
+                        productController.validateAddress(value!),
+                    lable: 'Quantity',
+                    icon: const Icon(Icons.attach_money_outlined,
+                        color: Colors.green),
+                    input: TextInputType.number,
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 20),
+                  
+
                   // Barcode Field
                   CustomTextField(
                     controller: productController.bar_code,

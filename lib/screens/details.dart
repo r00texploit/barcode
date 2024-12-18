@@ -85,6 +85,11 @@ class _GetProductDetailsState extends State<GetProductDetails> {
             ),
             const SizedBox(height: 5),
             Text(
+              'Quantity: \$${product['quantity'] ?? 'N/A'}',
+              style: const TextStyle(fontSize: 16, color: Colors.white70),
+            ),
+            const SizedBox(height: 5),
+            Text(
               'Barcode: ${product['barcode'] ?? 'N/A'}',
               style: const TextStyle(fontSize: 16, color: Colors.white70),
             ),

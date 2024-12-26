@@ -42,7 +42,7 @@ class _CartPageState extends State<CartPage> {
         ],
       ),
       body: Obx(() {
-        return cartItems.isEmpty
+        return cartItems.value.isEmpty
             ? const Center(
                 child: Text(
                   'Your cart is empty!',
@@ -53,9 +53,9 @@ class _CartPageState extends State<CartPage> {
                 children: [
                   Expanded(
                     child: ListView.builder(
-                      itemCount: cartItems.length,
+                      itemCount: cartItems.value.length,
                       itemBuilder: (context, index) {
-                        final item = cartItems[index];
+                        final item = cartItems.value[index];
                         return Card(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
